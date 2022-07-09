@@ -1,0 +1,20 @@
+v1-post-create:
+    path: /posts
+    controller: App\Http\V1\Action\Post\Create\CreateAction
+    methods: POST
+
+v1-post-update:
+    path: /posts
+    controller: App\Http\V1\Action\Post\Update\UpdateAction
+    methods: PUT
+
+v1-post-delete:
+    path: /posts/{id}
+    controller: App\Http\V1\Action\Post\Delete\DeleteAction
+    methods: DELETE
+
+v1-post-read:
+    path: /posts/{id}
+    controller: App\Http\V1\Action\Post\Read\ReadAction
+    methods: GET
+

@@ -1,0 +1,19 @@
+openapi: 3.0.0
+info:
+  version: v1
+  title: Anwalt Posts & Todos
+  description: Anwalt Posts & Todos
+servers:
+  - url: http://anwalt.test/api/v1
+paths:
+  $include:
+    - 'post/read/route.yaml'
+components:
+  schemas:
+    $include:
+        #Post
+        - 'post/read/response.yaml'
+        #General responses
+        - 'shared/error/GeneralErrorResponse.yaml'
+        - 'shared/error/UnauthorizedResponse.yaml'
+        - 'shared/error/BadRequestResponse.yaml'

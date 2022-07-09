@@ -1,0 +1,7 @@
+v1-docs:
+  resource: v1/docs.yaml
+  prefix: /docs/api
+
+v1-posts:
+    resource: v1/posts.yaml
+    prefix: /api/v1/

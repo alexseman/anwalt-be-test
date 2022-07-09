@@ -1,0 +1,27 @@
+ReadPostResponse:
+    type: object
+    properties:
+        success:
+            type: boolean
+            example: true
+        message:
+            type: string
+            example: Success message
+        data:
+            type: object
+            properties:
+                post:
+                    type: object
+                    properties:
+                        id:
+                            type: integer
+                            example: 1
+                        userId:
+                            type: integer
+                            example: 1
+                        title:
+                            type: string
+                            example: 'Post title'
+                        body:
+                            type: string
+                            example: 'Post body'
