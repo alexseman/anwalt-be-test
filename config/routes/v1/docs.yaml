@@ -1,0 +1,8 @@
+v1-docs-json:
+  path: /v1.json
+  controller: App\Http\V1\Action\OpenApi\OpenApiJsonAction
+  methods: GET
+v1-docs-html:
+  path: /v1
+  controller: App\Http\V1\Action\OpenApi\OpenApiUIAction
+  methods: GET
