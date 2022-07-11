@@ -43,7 +43,7 @@ class Todo
     private DateTime $dueOn;
 
     /**
-     * @Assert\Choice(callback={"App\Shared\Enum\TodoStatus", "choices"})
+     * @Assert\Choice(callback={"App\Shared\Enum\TodoStatusEnum", "choices"})
      * @ORM\Column(name="status")
      */
     private string $status;

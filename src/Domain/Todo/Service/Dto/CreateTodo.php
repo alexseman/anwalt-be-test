@@ -20,12 +20,12 @@ class CreateTodo
 
     /**
      * @Assert\NotBlank()
+     * @Assert\Choice(callback={"App\Shared\Enum\TodoStatusEnum", "choices"})
      */
     private string $status;
 
     /**
      * @Assert\NotBlank()
-//     * @Assert\DateTime()
      * @var string A "Y-m-d H:i:s" formatted value
      */
     private string $dueOn;

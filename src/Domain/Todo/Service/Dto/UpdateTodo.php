@@ -27,7 +27,7 @@ class UpdateTodo
 
     /**
      * @Assert\NotBlank()
-     * @Assert\Choice(callback={"App\Shared\Enum\TodoStatus", "choices"})
+     * @Assert\Choice(callback={"App\Shared\Enum\TodoStatusEnum", "choices"})
      */
     private string $status;
 
