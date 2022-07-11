@@ -21,6 +21,18 @@ services:
             - '../src/Domain/*/Service/*/Collection'
             - '../src/Domain/*/Service/*/Exception'
 
+    App\Domain\Post\Service\PostService:
+        tags: [ 'controller.service_arguments' ]
+        public: true
+        bind:
+            FOS\ElasticaBundle\Finder\TransformedFinder $postFinder: '@fos_elastica.finder.anwalt_posts.post'
+
+    App\Domain\Todo\Service\TodoService:
+        tags: [ 'controller.service_arguments' ]
+        public: true
+        bind:
+            FOS\ElasticaBundle\Finder\TransformedFinder $todoFinder: '@fos_elastica.finder.anwalt_todos.todo'
+
     App\Http\:
         resource: '../src/Http/'
         exclude:
