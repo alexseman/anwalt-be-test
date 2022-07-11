@@ -25,7 +25,7 @@ class DeletePost
      */
     public function __construct(?int $id)
     {
-        $this->id    = $id;
+        $this->id = $id;
 
         $this->validate();
     }
@@ -37,4 +37,5 @@ class DeletePost
     {
         return $this->id;
     }
+
 }

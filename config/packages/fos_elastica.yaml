@@ -1,0 +1,37 @@
+## Read the documentation: https://github.com/FriendsOfSymfony/FOSElasticaBundle/blob/master/doc/setup.md
+#fos_elastica:
+#    clients:
+#        default: { url: '%env(ELASTICSEARCH_URL)%' }
+#    indexes:
+#        anwalt_posts:
+#            types:
+#                post:
+#                    properties:
+#                        title: ~
+#                        body: ~
+#                        user:
+#                            type: object
+#                            properties:
+#                                id:
+#                                    type: integer
+#                    persistence:
+#                        driver: orm
+#                        model: App\Entity\Post
+#                        provider: ~
+#                        finder: ~
+##        anwalt_users:
+##            types:
+##                user:
+##                    properties:
+##                        posts:
+##                            type: nested
+##                            properties:
+##                                id:
+##                                    type: integer
+##                                title: ~
+##                                body: ~
+##                    persistence:
+##                        driver: orm
+##                        model: App\Entity\User
+##                        provider: ~
+##                        finder: ~

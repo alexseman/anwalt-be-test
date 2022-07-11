@@ -37,4 +37,5 @@ class ReadPost
     {
         return $this->id;
     }
+
 }

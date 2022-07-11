@@ -16,7 +16,7 @@ class UpdateRequest extends UpdatePost
 
         $title = $payload['title'] ?? null;
         $body  = $payload['body'] ?? null;
-        $id    = $payload['id'] ?? null;
+        $id    = (int)$request->get('id');
 
         parent::__construct($title, $body, $id);
     }

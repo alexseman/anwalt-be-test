@@ -4,7 +4,7 @@ v1-post-create:
     methods: POST
 
 v1-post-update:
-    path: /posts
+    path: /posts/{id}
     controller: App\Http\V1\Action\Post\Update\UpdateAction
     methods: PUT
 

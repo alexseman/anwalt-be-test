@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\V1\Action\Post\Delete\Dto;
 
 use App\Domain\Post\Service\Dto\DeletePost;
@@ -10,7 +12,7 @@ class DeleteRequest extends DeletePost
 
     public function __construct(Request $request)
     {
-        $id = $request->get('id');
+        $id = (int)$request->get('id');
         parent::__construct($id);
     }
 }
