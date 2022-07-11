@@ -5,3 +5,7 @@ v1-docs:
 v1-posts:
     resource: v1/posts.yaml
     prefix: /api/v1/
+
+v1-todos:
+    resource: v1/todos.yaml
+    prefix: /api/v1/

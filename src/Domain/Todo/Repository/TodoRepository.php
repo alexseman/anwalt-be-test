@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Post\Repository;
+namespace App\Domain\Todo\Repository;
 
-use App\Entity\Post;
+use App\Entity\Todo;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
-class PostRepository extends ServiceEntityRepository
+class TodoRepository extends ServiceEntityRepository
 {
 
     /**
@@ -16,21 +16,21 @@ class PostRepository extends ServiceEntityRepository
      */
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Post::class);
+        parent::__construct($registry, Todo::class);
     }
 
     /**
      * @param string $title
      * @param int    $userId
      *
-     * @return Post|null
+     * @return Todo|null
      */
-    public function findOneByUserAndTitle(string $title, int $userId): ?Post
+    public function findOneByUserAndTitle(string $title, int $userId): ?Todo
     {
-        return $this->createQueryBuilder('p')
-            ->select('p')
-            ->where('p.title = :title')
-            ->andWhere('p.user = :userId')
+        return $this->createQueryBuilder('t')
+            ->select('t')
+            ->where('t.title = :title')
+            ->andWhere('t.user = :userId')
             ->setParameters([
                 'title' => $title,
                 'userId' => $userId
@@ -41,15 +41,15 @@ class PostRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param int $postId
+     * @param int $todoId
      *
      * @return int
      */
-    public function deleteById(int $postId): int
+    public function deleteById(int $todoId): int
     {
         return $this->getEntityManager()->createQuery(<<<DQL
-        DELETE FROM \App\Entity\Post p WHERE p.id = :postId
+        DELETE FROM \App\Entity\Todo t WHERE t.id = :todoId
         DQL)
-        ->execute(['postId' => $postId]);
+        ->execute(['todoId' => $todoId]);
     }
 }
