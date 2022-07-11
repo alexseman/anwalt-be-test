@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\V1\Action\Post\Read\Dto;
 
 use App\Domain\Post\Service\Dto\ReadResponse;

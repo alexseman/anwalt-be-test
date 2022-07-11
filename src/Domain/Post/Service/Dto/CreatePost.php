@@ -38,7 +38,6 @@ class CreatePost
      */
     public function __construct(?string $title, ?string $body, ?int $userId)
     {
-
         $this->title  = $title === null ? $title : trim($title);
         $this->body   = $body === null ? $body : trim($body);
         $this->userId = $userId;

@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace App\Domain\Post\Repository;
 
+use App\Domain\Post\Service\Dto\ByUserTodo;
+use App\Domain\Post\Query\UserPostsQueryBuilder;
 use App\Entity\Post;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
 
 class PostRepository extends ServiceEntityRepository
@@ -17,6 +20,23 @@ class PostRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Post::class);
+    }
+
+    /**
+     * @param ByUserTodo $byUserPost
+     *
+     * @return Paginator
+     */
+    public function fetchPostList(ByUserTodo $byUserPost): Paginator
+    {
+        $offset = (($byUserPost->getCurrentPage() - 1) * $byUserPost->getPerPage());
+        $query  = UserPostsQueryBuilder::getInstance($this->getEntityManager())
+            ->build()
+            ->applySpecification($byUserPost)
+            ->setFirstResult($offset)
+            ->setMaxResults($byUserPost->getPerPage());
+
+        return new Paginator($query);
     }
 
     /**

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Domain\Post\Service\Dto;
 
 use App\Entity\Post;

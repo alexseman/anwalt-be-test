@@ -11,11 +11,19 @@ use Doctrine\Persistence\ManagerRegistry;
 class UserRepository extends ServiceEntityRepository
 {
 
+    /**
+     * @param ManagerRegistry $registry
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, User::class);
     }
 
+    /**
+     * @param int $userId
+     *
+     * @return User
+     */
     public function findOrCreateUser(int $userId): User
     {
         $user = $this->findOneBy(['id' => $userId]);

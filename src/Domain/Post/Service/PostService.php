@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace App\Domain\Post\Service;
 
+use App\Domain\Post\Service\Dto\ByUserPost;
+use App\Domain\Post\Service\Dto\ByUserTodo;
+use App\Domain\Post\Service\Dto\ByUserResponse;
 use App\Domain\Post\Service\Dto\CreatePost;
 use App\Domain\Post\Service\Dto\CreateUpdateResponse;
 use App\Domain\Post\Service\Dto\DeletePost;
@@ -16,26 +19,34 @@ use App\Shared\Exception\ValidationException;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Domain\Post\Repository\PostRepository;
 use App\Domain\User\Repository\UserRepository;
+use Elastica\Query\BoolQuery;
+use Elastica\Query\MatchQuery;
+use FOS\ElasticaBundle\Finder\TransformedFinder;
 
 class PostService
 {
+
     private EntityManagerInterface $entityManager;
     private UserRepository $userRepository;
     private PostRepository $postRepository;
+    private TransformedFinder $postFinder;
 
     /**
-     * @param EntityManagerInterface $entityManager
-     * @param UserRepository         $userRepository
-     * @param PostRepository         $postRepository
+     * @param EntityManagerInterface   $entityManager
+     * @param UserRepository           $userRepository
+     * @param PostRepository           $postRepository
+     * @param TransformedFinder $postFinder
      */
     public function __construct(
-      EntityManagerInterface $entityManager,
-      UserRepository $userRepository,
-      PostRepository $postRepository
+        EntityManagerInterface $entityManager,
+        UserRepository $userRepository,
+        PostRepository $postRepository,
+        TransformedFinder $postFinder
     ) {
         $this->entityManager  = $entityManager;
         $this->userRepository = $userRepository;
         $this->postRepository = $postRepository;
+        $this->postFinder     = $postFinder;
     }
 
     /**
@@ -102,6 +113,38 @@ class PostService
     {
         $post = $this->findPostOrFailWithMessage($readPost->getId());
         return new ReadResponse($post);
+    }
+
+    /**
+     * @param ByUserPost $byUserPost
+     *
+     * @return ByUserResponse
+     */
+    public function byUser(ByUserPost $byUserPost): ByUserResponse
+    {
+        $boolQuery = new BoolQuery();
+
+        $userQuery = new MatchQuery();
+        $userQuery->setFieldQuery('user.id', $byUserPost->getUserId());
+        $boolQuery->addFilter($userQuery);
+
+        if (null !== $byUserPost->getTitle()) {
+            $titleQuery = new MatchQuery();
+            $titleQuery->setFieldQuery('title', $byUserPost->getTitle());
+            $boolQuery->addShould($titleQuery);
+        }
+
+        if (null !== $byUserPost->getBody()) {
+            $bodyQuery = new MatchQuery();
+            $bodyQuery->setFieldQuery('body', $byUserPost->getBody());
+            $boolQuery->addShould($bodyQuery);
+        }
+
+        $posts = $this->postFinder->findPaginated($boolQuery);
+        $posts->setMaxPerPage($byUserPost->getPerPage());
+        $posts->setCurrentPage($byUserPost->getCurrentPage());
+
+        return new ByUserResponse($posts);
     }
 
     /**

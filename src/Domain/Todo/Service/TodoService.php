@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Domain\Todo\Service;
 
+use App\Domain\Todo\Service\Dto\ByUserResponse;
+use App\Domain\Todo\Service\Dto\ByUserTodo;
 use App\Domain\Todo\Service\Dto\CreateTodo;
 use App\Domain\Todo\Service\Dto\CreateUpdateResponse;
 use App\Domain\Todo\Service\Dto\DeleteTodo;
@@ -17,6 +19,9 @@ use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Domain\Todo\Repository\TodoRepository;
 use App\Domain\User\Repository\UserRepository;
+use Elastica\Query\BoolQuery;
+use Elastica\Query\MatchQuery;
+use FOS\ElasticaBundle\Finder\TransformedFinder;
 
 class TodoService
 {
@@ -24,6 +29,7 @@ class TodoService
     private EntityManagerInterface $entityManager;
     private UserRepository $userRepository;
     private TodoRepository $todoRepository;
+    private TransformedFinder $todoFinder;
 
     /**
      * @param EntityManagerInterface $entityManager
@@ -31,13 +37,15 @@ class TodoService
      * @param TodoRepository         $todoRepository
      */
     public function __construct(
-      EntityManagerInterface $entityManager,
-      UserRepository $userRepository,
-      TodoRepository $todoRepository
+        EntityManagerInterface $entityManager,
+        UserRepository $userRepository,
+        TodoRepository $todoRepository,
+        TransformedFinder $todoFinder
     ) {
         $this->entityManager  = $entityManager;
         $this->userRepository = $userRepository;
         $this->todoRepository = $todoRepository;
+        $this->todoFinder     = $todoFinder;
     }
 
     /**
@@ -106,6 +114,45 @@ class TodoService
     {
         $todo = $this->findTodoOrFailWithMessage($readTodo->getId());
         return new ReadResponse($todo);
+    }
+
+    /**
+     * @param ByUserTodo $byUserTodo
+     *
+     * @return ByUserResponse
+     */
+    public function byUser(ByUserTodo $byUserTodo): ByUserResponse
+    {
+        $boolQuery = new BoolQuery();
+
+        $userQuery = new MatchQuery();
+        $userQuery->setFieldQuery('user.id', $byUserTodo->getUserId());
+        $boolQuery->addFilter($userQuery);
+
+        if (null !== $byUserTodo->getTitle()) {
+            $titleQuery = new MatchQuery();
+            $titleQuery->setFieldQuery('title', $byUserTodo->getTitle());
+            $boolQuery->addShould($titleQuery);
+        }
+
+        if (null !== $byUserTodo->getStatus()) {
+            $statusQuery = new MatchQuery();
+            $statusQuery->setFieldQuery('status', $byUserTodo->getStatus());
+            $boolQuery->addFilter($statusQuery);
+        }
+
+        // TODO: here we should have a better filtering as an API consumer should not be forced to enter an exact datetime
+        if (null !== $byUserTodo->getDueOn()) {
+            $dueOnQuery = new MatchQuery();
+            $dueOnQuery->setFieldQuery('status', $byUserTodo->getDueOn());
+            $boolQuery->addShould($dueOnQuery);
+        }
+
+        $posts = $this->todoFinder->findPaginated($boolQuery);
+        $posts->setMaxPerPage($byUserTodo->getPerPage());
+        $posts->setCurrentPage($byUserTodo->getCurrentPage());
+
+        return new ByUserResponse($posts);
     }
 
     /**

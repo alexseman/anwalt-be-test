@@ -18,6 +18,8 @@ class HtmlTagsCleaner
             $replace_pattern = [
                 '<br/>'     => '',
                 '<br>'      => '',
+                '<script>'  => '',
+                '<script/>' => '',
             ];
 
             foreach ($replace_pattern as $pattern => $replace) {
