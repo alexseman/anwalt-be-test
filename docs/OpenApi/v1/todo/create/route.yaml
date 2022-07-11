@@ -1,0 +1,31 @@
+/todos:
+    post:
+        requestBody:
+            required: true
+            content:
+                application/json:
+                    schema:
+                        $ref: '#/components/schemas/CreateTodoRequest'
+        tags:
+            - Todo
+        operationId: createTodo
+        summary: Creates a new Todo
+        responses:
+            200:
+                description: Success
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/CreateTodoResponse'
+            400:
+                description: Bad request
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/BadRequestResponse'
+            500:
+                description: Internal server error
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/GeneralErrorResponse'

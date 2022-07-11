@@ -1,0 +1,33 @@
+/posts/{id}:
+    delete:
+        parameters:
+            -   in: path
+                name: id
+                schema:
+                    type: int
+                example: 21
+                description: Fetch a post
+                required: true
+        tags:
+            - Post
+        operationId: deletePost
+        summary: Deletes a post based on the id
+        responses:
+            200:
+                description: Success
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/DeletePostResponse'
+            400:
+                description: Bad request
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/BadRequestResponse'
+            500:
+                description: Internal server error
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/GeneralErrorResponse'

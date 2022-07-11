@@ -1,0 +1,31 @@
+/posts:
+    post:
+        requestBody:
+            required: true
+            content:
+                application/json:
+                    schema:
+                        $ref: '#/components/schemas/CreatePostRequest'
+        tags:
+            - Post
+        operationId: createPost
+        summary: Creates a new Post
+        responses:
+            200:
+                description: Success
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/CreatePostResponse'
+            400:
+                description: Bad request
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/BadRequestResponse'
+            500:
+                description: Internal server error
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/GeneralErrorResponse'

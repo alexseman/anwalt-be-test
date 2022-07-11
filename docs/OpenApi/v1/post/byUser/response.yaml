@@ -1,0 +1,31 @@
+ByUserPostListResponse:
+    type: object
+    properties:
+        success:
+            type: boolean
+            example: true
+        message:
+            type: string
+            example: Success message
+        data:
+            type: object
+            properties:
+                items:
+                    type: array
+                    items:
+                        type: object
+                        properties:
+                            id:
+                                type: integer
+                                example: 1
+                            userId:
+                                type: integer
+                                example: 1
+                            title:
+                                type: string
+                                example: 'Post title'
+                            body:
+                                type: string
+                                example: 'Post body'
+                pagination:
+                    $ref: '#/components/schemas/Pagination'

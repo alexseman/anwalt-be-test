@@ -1,0 +1,34 @@
+ByUserTodoListResponse:
+    type: object
+    properties:
+        success:
+            type: boolean
+            example: true
+        message:
+            type: string
+            example: Success message
+        data:
+            type: object
+            properties:
+                items:
+                    type: array
+                    items:
+                        type: object
+                        properties:
+                            id:
+                                type: integer
+                                example: 1
+                            userId:
+                                type: integer
+                                example: 1
+                            title:
+                                type: string
+                                example: 'Todo title'
+                            dueOn:
+                                type: string
+                                example: '2022-07-09 16:30:46'
+                            status:
+                                type: string
+                                example: 'completed'
+                pagination:
+                    $ref: '#/components/schemas/Pagination'

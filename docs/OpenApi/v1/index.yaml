@@ -8,12 +8,35 @@ servers:
 paths:
   $include:
     - 'post/read/route.yaml'
+    - 'post/byUser/route.yaml'
+    - 'post/create/route.yaml'
+    - 'post/update/route.yaml'
+    - 'post/delete/route.yaml'
+    - 'todo/read/route.yaml'
+    - 'todo/byUser/route.yaml'
+    - 'todo/create/route.yaml'
+    - 'todo/update/route.yaml'
+    - 'todo/delete/route.yaml'
 components:
   schemas:
     $include:
         #Post
         - 'post/read/response.yaml'
+        - 'post/byUser/response.yaml'
+        - 'post/create/request.yaml'
+        - 'post/create/response.yaml'
+        - 'post/update/request.yaml'
+        - 'post/update/response.yaml'
+        - 'post/delete/response.yaml'
+        - 'todo/read/response.yaml'
+        - 'todo/byUser/response.yaml'
+        - 'todo/create/request.yaml'
+        - 'todo/create/response.yaml'
+        - 'todo/update/request.yaml'
+        - 'todo/update/response.yaml'
+        - 'todo/delete/response.yaml'
         #General responses
+        - 'shared/pagination.yaml'
         - 'shared/error/GeneralErrorResponse.yaml'
         - 'shared/error/UnauthorizedResponse.yaml'
         - 'shared/error/BadRequestResponse.yaml'

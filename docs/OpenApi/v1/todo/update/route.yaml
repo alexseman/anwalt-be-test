@@ -1,0 +1,37 @@
+/todos/{id}:
+    put:
+        parameters:
+            -   in: path
+                name: id
+                required: true
+                schema:
+                    type: integer
+        requestBody:
+            required: true
+            content:
+                application/json:
+                    schema:
+                        $ref: '#/components/schemas/UpdateTodoRequest'
+        tags:
+            - Todo
+        operationId: updateTodo
+        summary: Updates a Todo
+        responses:
+            200:
+                description: Success
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/UpdateTodoResponse'
+            400:
+                description: Bad request
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/BadRequestResponse'
+            500:
+                description: Internal server error
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/GeneralErrorResponse'

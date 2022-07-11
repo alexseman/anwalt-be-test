@@ -1,0 +1,33 @@
+/todos/{id}:
+    get:
+        parameters:
+            -   in: path
+                name: id
+                schema:
+                    type: int
+                example: 21
+                description: Fetch a todo
+                required: true
+        tags:
+            - Todo
+        operationId: readTodo
+        summary: Retrieves a todo based on the id
+        responses:
+            200:
+                description: Success
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ReadTodoResponse'
+            400:
+                description: Bad request
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/BadRequestResponse'
+            500:
+                description: Internal server error
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/GeneralErrorResponse'

@@ -1,0 +1,37 @@
+/posts/{id}:
+    put:
+        parameters:
+            -   in: path
+                name: id
+                required: true
+                schema:
+                    type: integer
+        requestBody:
+            required: true
+            content:
+                application/json:
+                    schema:
+                        $ref: '#/components/schemas/UpdatePostRequest'
+        tags:
+            - Post
+        operationId: updatePost
+        summary: Updates a Post
+        responses:
+            200:
+                description: Success
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/UpdatePostResponse'
+            400:
+                description: Bad request
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/BadRequestResponse'
+            500:
+                description: Internal server error
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/GeneralErrorResponse'

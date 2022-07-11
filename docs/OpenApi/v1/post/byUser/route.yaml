@@ -1,0 +1,44 @@
+/user/{id}/posts:
+    get:
+        parameters:
+            -   in: path
+                name: id
+                schema:
+                    type: int
+                example: 21
+                description: Fetch the user's with the given id posts
+                required: true
+            -   in: query
+                name: title
+                example: 'post title'
+                schema:
+                    type: string
+            -   in: query
+                name: body
+                description: 'post body'
+                schema:
+                    type: string
+        tags:
+            - Post
+        operationId: userPostList
+        summary: Retrieves the paginated user's posts
+        responses:
+            200:
+                description: Success
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ByUserPostListResponse'
+            400:
+                description: Bad request
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/BadRequestResponse'
+            500:
+                description: Internal server error
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/GeneralErrorResponse'
+

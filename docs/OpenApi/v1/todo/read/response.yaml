@@ -1,0 +1,30 @@
+ReadTodoResponse:
+    type: object
+    properties:
+        success:
+            type: boolean
+            example: true
+        message:
+            type: string
+            example: Success message
+        data:
+            type: object
+            properties:
+                todo:
+                    type: object
+                    properties:
+                        id:
+                            type: integer
+                            example: 1
+                        userId:
+                            type: integer
+                            example: 1
+                        title:
+                            type: string
+                            example: 'Todo title'
+                        status:
+                            type: string
+                            example: 'completed'
+                        dueOn:
+                            type: string
+                            example: '2023:07:09 16:30:46'

@@ -1,0 +1,16 @@
+CreateTodoRequest:
+    type: object
+    properties:
+        userId:
+            type: integer
+            example: 1
+        title:
+            type: string
+            example: Todo Title
+        dueOn:
+            type: string
+            example: 2022-07-09 16:30:46
+        status:
+            type: string
+            enum: [pending, completed]
+            example: pending

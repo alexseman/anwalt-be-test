@@ -1,0 +1,15 @@
+DeleteTodoResponse:
+    type: object
+    properties:
+        success:
+            type: boolean
+            example: true
+        message:
+            type: string
+            example: Success message
+        data:
+            type: object
+            properties:
+                count:
+                    type: integer
+                    example: 1
